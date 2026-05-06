@@ -6,7 +6,10 @@ import { countryData, type CountryEconomy, liveNews } from "@/lib/data";
 import WorldMap from "@/components/WorldMap";
 import RegionPanel from "@/components/RegionPanel";
 import { TradingViewTicker } from "@/components/TradingViewTicker";
-import { TradingViewMiniChart } from "@/components/TradingViewMiniChart";
+
+import { TradingViewAdvancedChart } from "@/components/TradingViewAdvancedChart";
+import { TradingViewMarketOverview } from "@/components/TradingViewMarketOverview";
+import { TradingViewWatchlist } from "@/components/TradingViewWatchlist";
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -19,50 +22,58 @@ export default function Dashboard() {
   return (
     <div className="flex flex-col gap-6 p-6" id="dashboard-page">
       {/* Ticker Tape */}
-      <div className="w-full h-[40px] rounded-lg overflow-hidden border border-border bg-card">
-        <TradingViewTicker />
-      </div>
-
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Finance Video */}
-        <Card className="lg:col-span-2 overflow-hidden border-border bg-card flex flex-col">
-          <CardHeader className="flex flex-row items-center justify-between py-4">
-            <CardTitle className="text-sm flex items-center gap-2">
-              <span className="w-2 h-2 rounded-full bg-red animate-pulse-slow"></span>
-              Live Finance News
-            </CardTitle>
-            <Badge variant="destructive" className="bg-red/20 text-red hover:bg-red/30">LIVE</Badge>
-          </CardHeader>
-          <CardContent className="p-0 flex-1">
-            <div className="video-wrapper rounded-none h-full min-h-[300px]">
-              <iframe
-                src="https://www.youtube.com/embed/live_stream?channel=UCIALMKvObZNtJ6AmdCLP7Lg&autoplay=1&mute=1&controls=1&rel=0"
-                title="Live Finance News"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+        {/* TradingView Advanced Chart */}
+        <Card className="lg:col-span-2 overflow-hidden border-[#222] bg-[#111111] flex flex-col h-[600px]">
+          <CardContent className="p-0 flex-1 h-full relative">
+            <TradingViewAdvancedChart />
           </CardContent>
         </Card>
 
-        {/* Live Markets with TradingView */}
-        <div className="flex flex-col gap-4">
-          <Card className="flex-1 overflow-hidden border-border bg-card p-0">
-            <div className="h-full min-h-[160px]">
-              <TradingViewMiniChart symbol="BITSTAMP:BTCUSD" />
-            </div>
+        {/* Right Column: Video + Watchlist */}
+        <div className="flex flex-col gap-6 h-[600px]">
+          {/* Finance Video */}
+          <Card className="flex-1 overflow-hidden border-[#222] bg-[#111111] flex flex-col">
+            <CardHeader className="flex flex-row items-center justify-between py-2">
+              <CardTitle className="text-[10px] flex items-center gap-2">
+                <span className="w-1.5 h-1.5 rounded-full bg-red animate-pulse-slow"></span>
+                Live News
+              </CardTitle>
+              <Badge variant="destructive" className="bg-red/20 text-red text-[8px] h-4 hover:bg-red/30 px-1">LIVE</Badge>
+            </CardHeader>
+            <CardContent className="p-0 flex-1">
+              <div className="video-wrapper rounded-none h-full w-full">
+                <iframe
+                  src="https://www.youtube.com/embed/live_stream?channel=UCIALMKvObZNtJ6AmdCLP7Lg&autoplay=1&mute=0&controls=1&rel=0"
+                  title="Live Finance News"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            </CardContent>
           </Card>
-          <Card className="flex-1 overflow-hidden border-border bg-card p-0">
-            <div className="h-full min-h-[160px]">
-              <TradingViewMiniChart symbol="FOREXCOM:XAUUSD" />
-            </div>
+
+          {/* Watchlist */}
+          <Card className="flex-1 overflow-hidden border-[#222] bg-[#111111] flex flex-col">
+            <CardContent className="p-0 flex-1 h-full relative">
+              <TradingViewWatchlist />
+            </CardContent>
           </Card>
         </div>
       </div>
 
+      <div className="grid grid-cols-1 gap-6">
+        {/* Market Overview */}
+        <Card className="overflow-hidden border-[#222] bg-[#111111] flex flex-col h-[450px]">
+          <CardContent className="p-0 flex-1 h-full relative">
+            <TradingViewMarketOverview />
+          </CardContent>
+        </Card>
+      </div>
+
       {/* Row 2: World Map + Region Panel */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className={`overflow-hidden border-border bg-card ${selectedCountry ? "lg:col-span-2" : "lg:col-span-3"}`}>
+        <Card className={`overflow-hidden border-[#222] bg-[#111111] ${selectedCountry ? "lg:col-span-2" : "lg:col-span-3"}`}>
           <CardHeader className="flex flex-row items-center justify-between py-4">
             <CardTitle className="text-sm flex items-center gap-2 text-foreground">
               <Globe className="w-4 h-4 text-primary" />
@@ -94,7 +105,7 @@ export default function Dashboard() {
       {/* Row 3: Quick Stats + News Feed */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Quick Stats */}
-        <Card className="border-border bg-card">
+        <Card className="border-[#222] bg-[#111111]">
           <CardHeader className="py-4">
             <CardTitle className="text-sm flex items-center gap-2">
               <BarChart3 className="w-4 h-4 text-primary" />
@@ -125,7 +136,7 @@ export default function Dashboard() {
         </Card>
 
         {/* News Feed */}
-        <Card className="lg:col-span-2 border-border bg-card">
+        <Card className="lg:col-span-2 border-[#222] bg-[#111111]">
           <CardHeader className="flex flex-row items-center justify-between py-4">
             <CardTitle className="text-sm flex items-center gap-2">
               <Newspaper className="w-4 h-4 text-primary" />

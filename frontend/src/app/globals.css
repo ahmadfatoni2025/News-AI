@@ -97,43 +97,6 @@ body {
 ::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--primary); }
 
-/* === Sidebar Layout === */
-.app-layout {
-  display: flex;
-  min-height: 100vh;
-}
-
-.sidebar {
-  width: 240px;
-  background: var(--card);
-  border-right: 1px solid var(--border);
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 40;
-  display: flex;
-  flex-direction: column;
-  transition: transform 0.3s ease;
-}
-
-.main-content {
-  flex: 1;
-  margin-left: 240px;
-  min-height: 100vh;
-}
-
-@media (max-width: 768px) {
-  .sidebar {
-    transform: translateX(-100%);
-  }
-  .sidebar.open {
-    transform: translateX(0);
-  }
-  .main-content {
-    margin-left: 0;
-  }
-}
 
 /* === Cards === */
 .card-accent {
@@ -217,16 +180,3 @@ body {
 
 .animate-fade { animation: fadeIn 0.4s ease; }
 .animate-pulse-slow { animation: pulse 2s ease-in-out infinite; }
-
-/* Mobile menu overlay */
-.sidebar-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,0.5);
-  z-index: 35;
-  display: none;
-}
-
-.sidebar-overlay.visible {
-  display: block;
-}

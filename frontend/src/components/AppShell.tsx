@@ -1,8 +1,6 @@
 "use client";
 
-import { useState } from "react";
 import Sidebar from "@/components/Sidebar";
-import TopBar from "@/components/TopBar";
 import { usePathname } from "next/navigation";
 
 const pageTitles: Record<string, { title: string; subtitle?: string }> = {
@@ -14,23 +12,27 @@ const pageTitles: Record<string, { title: string; subtitle?: string }> = {
 };
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
-  const [sidebarOpen, setSidebarOpen] = useState(false);
   const pathname = usePathname();
-
   const pageInfo = pageTitles[pathname] || { title: "EconMap" };
 
   return (
-    <div className="flex min-h-screen bg-background">
-      <Sidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} />
-      <div className="flex-1 flex flex-col min-w-0 transition-all duration-300">
-        <TopBar
-          title={pageInfo.title}
-          subtitle={pageInfo.subtitle}
-          onMenuToggle={() => setSidebarOpen(!sidebarOpen)}
-        />
-        <main className="flex-1 overflow-x-hidden">
-          {children}
-        </main>
+    <div className="flex h-screen w-full bg-[#050505] p-0 md:p-3 overflow-hidden font-sans text-foreground">
+      {/* Outer Floating Window */}
+      <div className="flex w-full h-full bg-[#111111] md:rounded-[32px] overflow-hidden md:border border-[#222] shadow-2xl relative">
+        <Sidebar />
+
+        <div className="flex-1 flex flex-col min-w-0 bg-[#111111]">
+          <main className="flex-1 overflow-y-auto px-6 md:px-10 pb-28 md:pb-10">
+            {/* Title Section (Optional, you can remove if it doesn't fit the new design) */}
+            <div className="mb-8 pt-4">
+              <h1 className="text-3xl font-semibold text-foreground tracking-tight">{pageInfo.title}</h1>
+              {pageInfo.subtitle && <p className="text-[#888] mt-2 text-sm">{pageInfo.subtitle}</p>}
+            </div>
+
+            {/* Page Content */}
+            {children}
+          </main>
+        </div>
       </div>
     </div>
   );

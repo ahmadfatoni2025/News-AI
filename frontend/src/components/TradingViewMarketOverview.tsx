@@ -6,7 +6,7 @@ function TradingViewMarketOverviewInner() {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (container.current && container.current.innerHTML !== "") return;
+    if (!container.current || container.current.querySelector("script")) return;
 
     const script = document.createElement("script");
     script.src = "https://s3.tradingview.com/external-embedding/embed-widget-market-overview.js";
