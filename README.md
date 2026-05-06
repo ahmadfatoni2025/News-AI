@@ -1,1 +1,1 @@
-# EconNews - Economic Development News App
+# EconNews - Economic Development AI News App 
