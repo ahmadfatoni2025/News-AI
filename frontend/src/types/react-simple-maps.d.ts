@@ -1,0 +1,71 @@
+declare module "react-simple-maps" {
+  import { ComponentType, ReactNode, CSSProperties } from "react";
+
+  interface ComposableMapProps {
+    projection?: string;
+    projectionConfig?: {
+      scale?: number;
+      center?: [number, number];
+      rotate?: [number, number, number];
+    };
+    width?: number;
+    height?: number;
+    style?: CSSProperties;
+    children?: ReactNode;
+  }
+
+  interface ZoomableGroupProps {
+    center?: [number, number];
+    zoom?: number;
+    minZoom?: number;
+    maxZoom?: number;
+    children?: ReactNode;
+    onMoveStart?: (event: unknown) => void;
+    onMove?: (event: unknown) => void;
+    onMoveEnd?: (event: unknown) => void;
+  }
+
+  interface GeographiesProps {
+    geography: string | object;
+    children: (data: {
+      geographies: Geography[];
+    }) => ReactNode;
+  }
+
+  interface Geography {
+    rsmKey: string;
+    id: string;
+    properties: {
+      name: string;
+      [key: string]: unknown;
+    };
+    type: string;
+    geometry: object;
+  }
+
+  interface GeographyProps {
+    geography: Geography;
+    className?: string;
+    style?: {
+      default?: CSSProperties;
+      hover?: CSSProperties;
+      pressed?: CSSProperties;
+    };
+    onClick?: (event: React.MouseEvent) => void;
+    onMouseEnter?: (event: React.MouseEvent) => void;
+    onMouseLeave?: (event: React.MouseEvent) => void;
+    [key: string]: unknown;
+  }
+
+  interface MarkerProps {
+    coordinates: [number, number];
+    children?: ReactNode;
+    [key: string]: unknown;
+  }
+
+  export const ComposableMap: ComponentType<ComposableMapProps>;
+  export const ZoomableGroup: ComponentType<ZoomableGroupProps>;
+  export const Geographies: ComponentType<GeographiesProps>;
+  export const Geography: ComponentType<GeographyProps>;
+  export const Marker: ComponentType<MarkerProps>;
+}
